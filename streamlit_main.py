@@ -54,6 +54,7 @@ if st.button("Analyze Sentiment"):
 
     # Get sentiment from the model (use TFSMLayer for inference)
     unseen_sentiments = model(unseen_padded)  # Use model as a layer for prediction
+    st.write(unseen_sentiments.keys())  # This will print the keys in the dictionary
 
     # Convert the output to a sentiment label
     sentiment = "Positive" if unseen_sentiments.numpy() > 0.5 else "Negative"
