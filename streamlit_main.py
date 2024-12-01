@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.layers import TFSMLayer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 import re
@@ -10,9 +11,9 @@ import pickle
 
 nltk.download('stopwords')
 
-# Load the model using the standard Keras method
+# Load the model using TFSMLayer
 model_path = "tf_model"  # Path to the SavedModel folder
-model = tf.keras.models.load_model(model_path)
+model = TFSMLayer(model_path, call_endpoint="serving_default")
 
 # Load the tokenizer (ensure tokenizer.pkl is saved alongside the model)
 with open('tokenizer.pkl', 'rb') as file:
@@ -45,13 +46,15 @@ user_input = st.text_area("Text Input", placeholder="Type your text here...")
 
 if st.button("Analyze Sentiment"):
     unseen_processed = preprocess_text(user_input)
-    unseen_tokenized = tokenizer.texts_to_sequences([unseen_processed])  # Ensure input is list
+    unseen_tokenized = tokenizer.texts_to_sequences([unseen_processed])  # Ensure input is a list
     unseen_padded = pad_sequences(unseen_tokenized, padding='post', maxlen=100)
-    unseen_sentiments = model.predict(unseen_padded)  # Use model's predict method
 
-    # Handle prediction output (e.g., sigmoid output)
-    sentiment = "Positive" if unseen_sentiments > 0.5 else "Negative"
-    prediction_score = unseen_sentiments[0][0] * 10  # Assuming a single output value
+    # Get sentiment from the model (ensure the model is used as a Keras layer)
+    unseen_sentiments = model(unseen_padded)  # Use model as a layer for prediction
+
+    # Convert the output to a sentiment label
+    sentiment = "Positive" if unseen_sentiments.numpy() > 0.5 else "Negative"
+    prediction_score = unseen_sentiments.numpy()[0][0] * 10  # Assuming a single output value
     st.write(f"**Sentiment Score:** {prediction_score:.2f}")
     st.write(f"**Sentiment:** {sentiment}")
 else:
