@@ -1,6 +1,5 @@
 streamlit
 numpy
-sklearn
 keras==2.9.0
 Keras-Preprocessing==1.1.2
 nltk
