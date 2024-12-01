@@ -8,7 +8,8 @@ import sys
 from tensorflow.keras import preprocessing
 sys.modules['keras.src.preprocessing'] = preprocessing
 import pickle
-
+import nltk
+nltk.download('stopwords')
 # Load the model using TFSMLayer
 model_path = "tf_model"  # Path to the SavedModel folder
 model = TFSMLayer(model_path, call_endpoint="serving_default")
@@ -16,7 +17,12 @@ model = TFSMLayer(model_path, call_endpoint="serving_default")
 # Load the tokenizer (ensure tokenizer.pkl is saved alongside the model)
 with open('tokenizer.pkl', 'rb') as file:
     tokenizer = pickle.load(file)
-
+    
+TAG_RE = re.compile(r'<[^>]+>')
+def remove_tags(text):
+    '''Removes HTML tags: replaces anything between opening and closing <> with empty space'''
+    return TAG_RE.sub('', text)
+    
 # Function to preprocess text
 def preprocess_text(sen):
     '''Cleans text data up, leaving only 2 or more char long non-stepwords composed of A-Z & a-z only in lowercase'''
