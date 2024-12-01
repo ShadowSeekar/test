@@ -5,12 +5,11 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 
-# Load the trained LSTM model
-model_path = "converted_model.keras"
-model = load_model(model_path)
+# Load the trained LSTM model (SavedModel format)
+model_directory = "tf_model"  # Replace with your actual directory
+model = tf.keras.models.load_model(model_directory)
 
-# Load the tokenizer (ensure this file is available or modify as needed)
-# Replace 'tokenizer.pkl' with the path to your tokenizer file
+# Load the tokenizer (if it was saved separately)
 with open('tokenizer.pkl', 'rb') as file:
     tokenizer = pickle.load(file)
 
