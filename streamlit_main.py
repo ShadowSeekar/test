@@ -18,12 +18,12 @@ model = TFSMLayer(model_path, call_endpoint="serving_default")
 # Load the tokenizer (ensure tokenizer.pkl is saved alongside the model)
 with open('tokenizer.pkl', 'rb') as file:
     tokenizer = pickle.load(file)
-    
+
 TAG_RE = re.compile(r'<[^>]+>')
 def remove_tags(text):
     '''Removes HTML tags: replaces anything between opening and closing <> with empty space'''
     return TAG_RE.sub('', text)
-    
+
 # Function to preprocess text
 def preprocess_text(sen):
     '''Cleans text data up, leaving only 2 or more char long non-stopwords composed of A-Z & a-z only in lowercase'''
@@ -49,7 +49,10 @@ if st.button("Analyze Sentiment"):
     unseen_tokenized = tokenizer.texts_to_sequences([unseen_processed])  # Ensure input is a list
     unseen_padded = pad_sequences(unseen_tokenized, padding='post', maxlen=100)
 
-    # Get sentiment from the model (ensure the model is used as a Keras layer)
+    # Cast the input to float32 as expected by the model
+    unseen_padded = tf.cast(unseen_padded, tf.float32)
+
+    # Get sentiment from the model (use TFSMLayer for inference)
     unseen_sentiments = model(unseen_padded)  # Use model as a layer for prediction
 
     # Convert the output to a sentiment label
