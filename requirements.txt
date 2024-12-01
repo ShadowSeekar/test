@@ -1,6 +1,6 @@
 streamlit
 numpy
-tensorflow
+tensorflow==1.10
 keras
 nltk
 scikit-learn
