@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 
 # Load the trained LSTM model
-model_path = "c1_lstm_model_acc_0.854.h5"
+model_path = "converted_model.keras"
 model = load_model(model_path)
 
 # Load the tokenizer (ensure this file is available or modify as needed)
