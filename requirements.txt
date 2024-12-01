@@ -1,7 +1,7 @@
 streamlit
 numpy
 keras
-Keras-Preprocessing
+keras-preprocessing
 nltk
 scikit-learn
 tokenizer
@@ -10,3 +10,7 @@ tensorflow
 #tensorflow-estimator==2.9.0
 #tensorflow-io-gcs-filesystem==0.26.0
 #python-dateutil==2.8.2
+tensorboard
+tensorboard-plugin-wit
+tensorflow-estimator
+scipy
