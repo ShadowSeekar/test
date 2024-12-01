@@ -1,7 +1,12 @@
 streamlit
 numpy
-tensorflow==1.10
-keras
+sklearn
+keras==2.9.0
+Keras-Preprocessing==1.1.2
 nltk
 scikit-learn
 tokenizer
+h5py==3.7.0
+tensorflow==2.9.1
+tensorflow-estimator==2.9.0
+tensorflow-io-gcs-filesystem==0.26.0
