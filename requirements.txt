@@ -1,15 +1,6 @@
-langchain
-langchain_community
-sentence_transformers
-torch
-sentencepiece
-transformers
-accelerate
-chromadb
-pypdf
-tiktoken
 streamlit
-PyPDF2
+numpy
+pickle
 
 tensorflow
 keras
