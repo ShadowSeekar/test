@@ -2,6 +2,7 @@ streamlit
 numpy
 keras
 keras-preprocessing
+keras-src
 nltk
 scikit-learn
 tokenizer
