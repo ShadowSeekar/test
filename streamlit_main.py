@@ -4,6 +4,9 @@ import tensorflow as tf
 from tensorflow.keras.layers import TFSMLayer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
+import sys
+from tensorflow.keras import preprocessing
+sys.modules['keras.src.preprocessing'] = preprocessing
 import pickle
 
 # Load the model using TFSMLayer
