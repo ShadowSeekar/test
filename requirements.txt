@@ -1,6 +1,5 @@
 streamlit
 numpy
-pickle
 tensorflow
 keras
 nltk
