@@ -53,12 +53,15 @@ if st.button("Analyze Sentiment"):
     unseen_padded = tf.cast(unseen_padded, tf.float32)
 
     # Get sentiment from the model (use TFSMLayer for inference)
-    unseen_sentiments = model(unseen_padded)  # Use model as a layer for prediction
-    st.write(unseen_sentiments.keys())  # This will print the keys in the dictionary
+    unseen_sentiments = model(unseen_padded)  # Model output is a dictionary
+
+    # Extract the sentiment score from the dictionary (the key is 'dense_2')
+    sentiment_score = unseen_sentiments['dense_2']  # Use the correct key
+    sentiment_score = sentiment_score.numpy()[0][0]  # Assuming single scalar output
 
     # Convert the output to a sentiment label
-    sentiment = "Positive" if unseen_sentiments.numpy() > 0.5 else "Negative"
-    prediction_score = unseen_sentiments.numpy()[0][0] * 10  # Assuming a single output value
+    sentiment = "Positive" if sentiment_score > 0.5 else "Negative"
+    prediction_score = sentiment_score * 10  # Scale the sentiment score
     st.write(f"**Sentiment Score:** {prediction_score:.2f}")
     st.write(f"**Sentiment:** {sentiment}")
 else:
